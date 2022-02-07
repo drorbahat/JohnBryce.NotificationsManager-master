@@ -1,6 +1,8 @@
 import { makeStyles } from '@mui/styles';
 import { Paper, Typography, TextField, Button } from '@mui/material'
-import { display, padding } from '@mui/system';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNotification } from '../app/navbarSlice';
 
 const useStyles = makeStyles({
     root: {
@@ -12,11 +14,11 @@ const useStyles = makeStyles({
         marginTop: "100px",
         width: "300px",
         height: "200px",
-        textAlign:"center",
-        display:"flex",
-        flexDirection:"column",
-        justifyContent:"space-between",
-        padding:"1rem"
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "1rem"
 
     }
 
@@ -24,14 +26,34 @@ const useStyles = makeStyles({
 
 const CreateNotification = () => {
     const classes = useStyles()
+
+    const [message, setMessage] = useState('')
+
+    const dispatch = useDispatch()
+
     return (
-        <div className={classes.root}>
-            <Paper className={classes.paper} elevation={3}>
-                <Typography variant="h6" gutterBottom component="div">
+        <div
+            className={classes.root}>
+            <Paper
+                className={classes.paper}
+                elevation={3}>
+                <Typography
+                    variant="h6"
+                    gutterBottom
+                    component="div">
                     Create New Notfication
                 </Typography >
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                <Button variant="contained">Message</Button>
+                <TextField
+                    id="outlined-basic"
+                    label="Message"
+                    variant="outlined"
+                    onChange={e => setMessage(e.target.value)} />
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        dispatch(addNotification({ message }))
+                    }}>
+                    create</Button>
 
             </Paper>
         </div>
